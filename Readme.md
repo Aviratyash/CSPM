@@ -34,15 +34,30 @@ A lightweight, Python-based CSPM tool designed to detect common AWS security mis
 ```
 CSPM/
 │
-├── main.py                 # Main execution script
-├── checks/
+├── main.py # Main orchestration script
+├── slack_alert.py # Slack integration module
 │
-├── slack_alert.py          # Slack webhook integration
-├── report_generator.py     # HTML report generation
-├── requirements.txt        # Python dependencies
-├── .env.example           # Environment variables template
-├── .gitignore
-└── README.md              # This file
+├── checks/ # Misconfiguration detection modules
+│ ├── iam_mfa.py # IAM users without MFA
+│ ├── iam_unused.py # Inactive IAM users/roles
+│ ├── iam_wildcard_roles.py # Roles with wildcard permissions
+│ ├── lambda_permissions.py # Over-permissive Lambda roles
+│ ├── rds_public.py # Publicly accessible RDS instances
+│ ├── s3_encryption.py # S3 buckets without encryption
+│ ├── s3_public.py # Publicly accessible S3 buckets
+│ └── security_groups.py # Overly permissive security groups
+│
+├── inventory/ # AWS resource fetchers
+│ ├── ec2.py
+│ ├── iam.py
+│ └── s3.py
+│
+├── reports/ # Report generation
+│ ├── html_reports.py # HTML report generator
+│ ├── inventory.json # Raw data snapshot (if any)
+│ └── report.html # Final HTML report
+│
+└── README.md
 ```
 
 ---
@@ -97,11 +112,9 @@ export AWS_DEFAULT_REGION="us-east-1"
 
 2. Configure the webhook URL:
    ```bash
-   # Copy .env.example to .env
-   cp .env.example .env
-   
-   # Edit .env file and add your webhook URL
-   SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
+
+   # Edit main.py file and add your webhook URL
+   SLACK_WEBHOOK = https://hooks.slack.com/services/your/webhook/url
    ```
 
 ---
@@ -111,18 +124,6 @@ export AWS_DEFAULT_REGION="us-east-1"
 ### Basic Scan
 ```bash
 python main.py
-```
-
-### Advanced Options
-```bash
-# Scan specific services only
-python main.py --services iam,s3
-
-# Skip Slack notifications
-python main.py --no-slack
-
-# Custom output directory
-python main.py --output-dir ./custom-reports
 ```
 
 ---
@@ -145,7 +146,6 @@ AWS Console: IAM → Users → admin-user → Security credentials → MFA
 ### HTML Report Features
 - 📈 Executive summary with risk metrics
 - 📋 Detailed findings table with severity levels
-- 🔧 Step-by-step remediation instructions
 - 📊 Visual risk assessment charts
 
 
@@ -198,31 +198,13 @@ Your AWS credentials need the following permissions:
 
 ## 🔧 Customization
 
-### Adding New Security Checks
+### 📁 Step 1: Create a New Check File
 
-1. Create a new check file in the `checks/` directory
-2. Implement your check function following this pattern:
+Navigate to the `checks/` directory and create a new Python file. For example: my_custom.py
 
-```python
-def check_new_service(session):
-    """
-    Check for security misconfigurations in New Service
-    
-    Args:
-        session: boto3 session object
-        
-    Returns:
-        list: List of finding dictionaries
-    """
-    findings = []
-    client = session.client('newservice')
-    
-    # Your check logic here
-    
-    return findings
-```
+Integrate that rule in `main.py` as per the format in tool
 
-3. Import and register in `main.py`
+Import and register in `main.py`
 
 ### Customizing Risk Scores
 
