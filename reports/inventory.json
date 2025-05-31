@@ -1,0 +1,87 @@
+{
+    "Inventory": {
+        "EC2": [],
+        "S3": [
+            {
+                "Name": "testing-yash-511-2003",
+                "CreationDate": "2025-05-31 09:08:33+00:00"
+            }
+        ],
+        "IAM": [
+            {
+                "UserName": "test",
+                "UserId": "AIDARLPXLUQSZTUSI4S7G",
+                "CreateDate": "2025-05-30 11:57:30+00:00"
+            },
+            {
+                "UserName": "test2",
+                "UserId": "AIDARLPXLUQSXM4XBWCOJ",
+                "CreateDate": "2025-05-31 09:21:57+00:00"
+            }
+        ]
+    },
+    "Misconfigurations": {
+        "PublicS3Buckets": [
+            {
+                "Bucket": "testing-yash-511-2003",
+                "Public": false,
+                "Reasons": []
+            }
+        ],
+        "OpenSecurityGroups": [],
+        "IAMUsersWithoutMFA": [
+            {
+                "User": "test",
+                "MFAEnabled": false,
+                "Severity": "High",
+                "RiskScore": 9,
+                "Remediation": "Enable MFA for this IAM user in IAM \u2192 Users \u2192 [User] \u2192 Security Credentials."
+            },
+            {
+                "User": "test2",
+                "MFAEnabled": false,
+                "Severity": "High",
+                "RiskScore": 9,
+                "Remediation": "Enable MFA for this IAM user in IAM \u2192 Users \u2192 [User] \u2192 Security Credentials."
+            }
+        ],
+        "IAMRolesWithWildcards": [],
+        "PublicRDSInstances": [],
+        "LambdaWidePermissions": [],
+        "S3EncryptionDisabled": [],
+        "IAMUnusedEntities": [
+            {
+                "Entity": "test",
+                "Type": "User",
+                "LastUsed": "None",
+                "Severity": "Medium",
+                "RiskScore": 6,
+                "Remediation": "Review this IAM user and consider deactivating or deleting if no longer in use."
+            },
+            {
+                "Entity": "test2",
+                "Type": "User",
+                "LastUsed": "None",
+                "Severity": "Medium",
+                "RiskScore": 6,
+                "Remediation": "Review this IAM user and consider deactivating or deleting if no longer in use."
+            },
+            {
+                "Entity": "AWSServiceRoleForSupport",
+                "Type": "Role",
+                "LastUsed": "None",
+                "Severity": "Medium",
+                "RiskScore": 6,
+                "Remediation": "Review this IAM role and remove or rotate it if unused."
+            },
+            {
+                "Entity": "AWSServiceRoleForTrustedAdvisor",
+                "Type": "Role",
+                "LastUsed": "None",
+                "Severity": "Medium",
+                "RiskScore": 6,
+                "Remediation": "Review this IAM role and remove or rotate it if unused."
+            }
+        ]
+    }
+}
