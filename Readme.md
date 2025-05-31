@@ -36,11 +36,6 @@ CSPM/
 │
 ├── main.py                 # Main execution script
 ├── checks/
-│   ├── __init__.py
-│   ├── iam_checks.py       # IAM-related security checks
-│   ├── s3_checks.py        # S3 bucket encryption checks
-│   ├── rds_checks.py       # RDS exposure checks
-│   └── lambda_checks.py    # Lambda permission checks
 │
 ├── slack_alert.py          # Slack webhook integration
 ├── report_generator.py     # HTML report generation
@@ -152,25 +147,11 @@ AWS Console: IAM → Users → admin-user → Security credentials → MFA
 - 📋 Detailed findings table with severity levels
 - 🔧 Step-by-step remediation instructions
 - 📊 Visual risk assessment charts
-- 🕒 Timestamp and scan metadata
 
-Report location: `./reports/security_report_YYYY-MM-DD_HH-MM-SS.html`
+
+Report location: `./reports/report.html`
 
 ---
-
-## 🧪 Testing
-
-### Test Slack Integration
-```bash
-# Run test mode to verify Slack webhook
-python main.py --test-slack
-```
-
-### Simulate High-Severity Finding
-Create a test IAM user without MFA to trigger alerts:
-```bash
-aws iam create-user --user-name test-user-no-mfa
-```
 
 ---
 
@@ -252,56 +233,6 @@ Edit the risk scoring logic in individual check files:
 risk_score = 8 if is_production_resource else 5
 ```
 
----
-
-## 🚦 Roadmap
-
-- [ ] **Multi-cloud Support**
-  - Azure security assessments
-  - Google Cloud Platform checks
-  
-- [ ] **Advanced Features**
-  - Auto-remediation scripts
-  - Custom rule engine
-  - Historical trend analysis
-  
-- [ ] **Integrations**  
-  - Jira ticket creation
-  - PagerDuty integration
-  - Splunk/ElasticSearch export
-
-- [ ] **Enterprise Features**
-  - Role-based access control
-  - Multi-tenant support
-  - Compliance framework mapping (SOC2, NIST, etc.)
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest tests/
-
-# Run linting
-flake8 .
-black .
-```
-
-### Submitting Changes
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
----
 
 ## 📄 License
 
@@ -311,10 +242,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- 📧 **Email**: security-team@yourcompany.com
-- 💬 **Slack**: #security-tools
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/cspm-tool/issues)
-- 📖 **Documentation**: [Wiki](https://github.com/yourusername/cspm-tool/wiki)
+- 📧 **Email**: yashingole2003@gmail.com
 
 ---
 
